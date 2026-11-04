@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Microscope Stage · Fernando Quijada</title>
+<meta name="description" content="Case study: a mechanical lock-slide-lock stage that switches an LED microscope between two configurations in under 5 seconds.">
+<meta property="og:title" content="LED microscope stage · Fernando Quijada">
+<meta property="og:image" content="../assets/img/microscope-stage/stage-prototype.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5 9h22l-2 17q-.3 2-2.3 2H9.3Q7.3 28 7 26Z' fill='%233b2416'/%3E%3Cpath d='M5.6 14h20.8l-.4 4H6Z' fill='%23c9a07a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-drink="projects">
+
+<div class="cs-top">
+  <a class="back" href="../index.html#projects">← Back to your cortado</a>
+  <div class="theme-switch" role="group" aria-label="Color theme">
+    <button type="button" data-set-theme="light" aria-pressed="false">Latte</button>
+    <button type="button" data-set-theme="dark" aria-pressed="false">Espresso</button>
+  </div>
+</div>
+
+<main class="cs">
+
+  <div class="cs-hero">
+    <div>
+      <p class="label">Case study · Duke BME Design Fellows · Summer 2026</p>
+      <h1>A one-slide stage for a portable LED microscope</h1>
+      <p class="lede">A purely mechanical unlock, slide, and lock mechanism that moves a cup of LEDs between a lab's two microscope configurations in under 5 seconds.</p>
+    </div>
+
+    <aside class="ticket" aria-label="Project summary">
+      <div class="t-head"><span>Order #2026</span><span>Summer 2026</span></div>
+      <dl>
+        <dt>Client</dt><dd>A Duke cancer research lab</dd>
+        <dt>Program</dt><dd>Duke BME Design Fellows</dd>
+        <dt>My role</dt><dd>Designed and built it solo, with regular client check-ins</dd>
+        <dt>Tools</dt><dd>Onshape, 3D printing</dd>
+        <dt>Timeline</dt><dd>May to Jul 2026</dd>
+      </dl>
+      <div class="t-total"><span>Switch time</span><strong>Under 5 s</strong></div>
+    </aside>
+  </div>
+
+  <div class="evolution">
+    <figure>
+      <div class="shot" style="aspect-ratio: 1 / 1"><img src="../assets/img/microscope-stage/cad-iso.png" width="647" height="627" alt="3D render of the full stage assembly in Onshape: a ring with four sliding posts and legs carrying the LED cup"></div>
+      <figcaption><b>Modeled</b>The full assembly in Onshape.</figcaption>
+    </figure>
+    <span class="arrow" aria-hidden="true">became →</span>
+    <figure>
+      <div class="shot cover" style="aspect-ratio: 1 / 1"><img src="../assets/img/microscope-stage/stage-prototype.jpg" width="1080" height="1344" alt="The 3D-printed orange stage prototype sitting on a table"></div>
+      <figcaption><b>Built</b>The final 3D-printed prototype.</figcaption>
+    </figure>
+  </div>
+
+  <section class="cs-section" aria-labelledby="problem-h">
+    <header><span class="label">01</span><h2 id="problem-h">The problem</h2></header>
+    <div class="cs-body">
+      <p>The lab images mice with a portable LED microscope that runs in two configurations. Switching between them took minutes of hands-on adjustment, while the setup had to stay compatible with the lab's equipment and leave room to work with the mouse.</p>
+      <p class="callout">Let a researcher switch the microscope between its two configurations quickly, with no tools and no electronics, while keeping clear access to the mouse.</p>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="process-h">
+    <header><span class="label">02</span><h2 id="process-h">Process</h2></header>
+    <div class="cs-body">
+      <ol class="steps">
+        <li><div><h3>Scope with the client <span>May 2026</span></h3>
+          <p>Met with the lab to learn how the microscope is used and what each configuration needs.</p></div></li>
+        <li><div><h3>Prototype fast and cheap</h3>
+          <p>Built low-fidelity prototypes and brought them to repeated client meetings.</p></div></li>
+        <li><div><h3>Redesign from scratch</h3>
+          <p>Those meetings surfaced requirements I had missed, such as access to the mouse and the viewing angle. They didn't fit the first concept, so I started over with a complete redesign.</p></div></li>
+        <li><div><h3>Model, print, and test <span>Jul 2026</span></h3>
+          <p>Modeled the full assembly in Onshape, 3D printed it, and checked it against the specs: switch time, 3D translation and rotation, mouse clearance, and fit with the client's setup.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="design-h">
+    <header><span class="label">03</span><h2 id="design-h">How it works</h2></header>
+    <div class="cs-body">
+      <div class="evolution">
+        <figure>
+          <div class="shot" style="aspect-ratio: 720 / 896"><video src="../assets/img/microscope-stage/stage-demo.mp4" poster="../assets/img/microscope-stage/stage-prototype.jpg" autoplay muted loop playsinline aria-label="Video of the stage being switched between its two positions by hand"></video></div>
+          <figcaption><b>Prototype</b>Switching configurations by hand.</figcaption>
+        </figure>
+        <span class="arrow" aria-hidden="true"></span>
+        <figure>
+          <div class="shot" style="aspect-ratio: 1 / 1"><img src="../assets/img/microscope-stage/cad-top.png" width="661" height="649" loading="lazy" alt="Top-down render of the stage assembly"></div>
+          <figcaption><b>From above</b>The ring keeps the center open.</figcaption>
+        </figure>
+      </div>
+      <ul>
+        <li><strong>Slide.</strong> A sliding component carries the LED cup between the two configurations, one at each end of its travel: all the way up and all the way down.</li>
+        <li><strong>Lock.</strong> At each end, a lock holds it in place. At the top you slide the slider left, and at the bottom you slide it right.</li>
+        <li><strong>Unlock.</strong> To switch, you slide the lock back, move the cup to the other end, and lock again. There are no tools, screws, or electronics.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="role-h">
+    <header><span class="label">04</span><h2 id="role-h">My role</h2></header>
+    <div class="cs-body">
+      <p>This was a solo project. I ran the client check-ins, wrote the specs, designed every part in Onshape, printed and assembled the prototypes, and tested them.</p>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="results-h">
+    <header><span class="label">05</span><h2 id="results-h">Results</h2></header>
+    <div class="cs-body">
+      <ul>
+        <li>Cut a configuration change from minutes to <strong>under 5 seconds</strong>.</li>
+        <li>Gives 3D translation and rotation and leaves clearance for the mouse.</li>
+        <li>Fully compatible with the client's existing setup.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="next-up">
+    <a class="back" href="../index.html#projects">← Back to your cortado</a>
+    <a class="back" href="../index.html#menu">Change order</a>
+  </div>
+</main>
+
+<div class="sip">
+  <div class="sip-meta" aria-hidden="true">
+    <span class="label" data-cup-pct>100% left</span>
+    <span class="status" data-cup-status>Scroll to sip</span>
+  </div>
+  <button class="cup-btn" type="button" data-cup aria-label="Your cortado. Tap for a coffee fact or a fact about Fernando."></button>
+</div>
+
+<dialog class="lb" aria-label="Enlarged image">
+  <button type="button">Close</button>
+  <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
+  <p></p>
+</dialog>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
