@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Water Tank Alarm · Fernando Quijada</title>
+<meta name="description" content="Case study: a clamp-on water level alarm for ultrasound test tanks, built for a Duke lab in EGR 101.">
+<meta property="og:title" content="Water level alarm for ultrasound test tanks · Fernando Quijada">
+<meta property="og:image" content="../assets/img/water-tank/prototype-on-tank.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5 9h22l-2 17q-.3 2-2.3 2H9.3Q7.3 28 7 26Z' fill='%233b2416'/%3E%3Cpath d='M5.6 14h20.8l-.4 4H6Z' fill='%23c9a07a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-drink="projects">
+
+<div class="cs-top">
+  <a class="back" href="../index.html#projects">← Back to your cortado</a>
+  <div class="theme-switch" role="group" aria-label="Color theme">
+    <button type="button" data-set-theme="light" aria-pressed="false">Latte</button>
+    <button type="button" data-set-theme="dark" aria-pressed="false">Espresso</button>
+  </div>
+</div>
+
+<main class="cs">
+
+  <div class="cs-hero">
+    <div>
+      <p class="label">Case study · EGR 101 · Fall 2023</p>
+      <h1>A water level alarm for ultrasound test tanks</h1>
+      <p class="lede">A clamp-on monitor that watches the water in a lab's ultrasound tanks, then sounds a buzzer and posts a Slack alert when a tank overflows, leaks, or changes level too fast.</p>
+    </div>
+
+    <aside class="ticket" aria-label="Project summary">
+      <div class="t-head"><span>Order #101</span><span>Fall 2023</span></div>
+      <dl>
+        <dt>Client</dt><dd>Dr. David Bradway, Trahey Lab, Duke BME</dd>
+        <dt>Team</dt><dd>Evan Bulan, Mathew Chu, Taein Kim, Fernando Quijada</dd>
+        <dt>My role</dt><dd>Hardware: circuit design (with the team), all soldering, enclosure design and build. Part of every client meeting and design step.</dd>
+        <dt>Tools</dt><dd>Arduino Nano ESP32, AO2YYUW ultrasonic sensor, piezo buzzers, LCD1602 (I2C), laser-cut acrylic, Slack webhooks</dd>
+        <dt>Timeline</dt><dd>Sept to Dec 2023</dd>
+      </dl>
+      <div class="t-total"><span>Total</span><span>$55.80 <small>of $75</small></span></div>
+      <div class="t-total"><span>Tests passed</span><strong>6 of 6 run</strong></div>
+    </aside>
+  </div>
+
+  <div class="evolution">
+    <figure>
+      <div class="shot cover" style="aspect-ratio: 4 / 3"><img src="../assets/img/water-tank/sketch-solution-proposed.jpg" width="1600" height="1200" alt="Hand sketch of the proposed solution: ultrasonic sensor on a clamp over a tank, wired to an acrylic box with Arduino Nano, power supply, breadboard, and buzzer"></div>
+      <figcaption><b>Proposed</b>Our index-card sketch after the pivot: sensor on a clamp, electronics in an acrylic box.</figcaption>
+    </figure>
+    <span class="arrow" aria-hidden="true">became →</span>
+    <figure>
+      <div class="shot" style="aspect-ratio: 4 / 3"><img src="../assets/img/water-tank/prototype-on-tank.jpg" width="577" height="433" alt="The finished acrylic monitor clamped to the side of a clear water tank"></div>
+      <figcaption><b>Built</b>The final prototype clamped to a 12 × 20 × 10 in test tank.</figcaption>
+    </figure>
+  </div>
+
+  <section class="cs-section" aria-labelledby="problem-h">
+    <header><span class="label">01</span><h2 id="problem-h">The problem</h2></header>
+    <div class="cs-body">
+      <p>The Trahey Lab tests ultrasound devices in large, clear tanks of degassed water, and nothing was watching the water level. In our first client meeting (Sept 7, 2023), Dr. Bradway described two ways the lab floods:</p>
+      <ul>
+        <li><strong>Overflow.</strong> Someone starts filling a tank from the bottom valve, steps away, and it spills onto the equipment around it.</li>
+        <li><strong>Leaks.</strong> During degassing, pumps cycle water out and back through hoses. If a hose comes loose or a valve is left partly open, the tank drains.</li>
+      </ul>
+      <p>He wanted to know "when it drops a cm," with a fast alert for rapid drops and a remote alert because the lab is sometimes empty. The device also couldn't modify the glued tank, couldn't shed particles into the water, and had to stay off to one side so the middle of the tank stayed free for experiments.</p>
+      <p class="callout">Design an adaptable, compact water level and velocity monitor that alerts the lab to overflow, leakage, or an undesired level through an audible alarm and an online notification.</p>
+      <p>We found no system in the lab, and the market options we researched were either over budget or too bulky for a tank wall.</p>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="process-h">
+    <header><span class="label">02</span><h2 id="process-h">Process</h2><p class="label" style="text-transform:none;letter-spacing:0">About 60 ideas to one design in five weeks. The first winner wasn't the one we built.</p></header>
+    <div class="cs-body wide">
+      <ol class="steps">
+        <li><div><h3>Understand the client <span>Sept 2023</span></h3>
+          <p>Built a need-to-know list (17 background, 15 solution, 8 governing, and 4 business questions), turned it into an interview guide, and met Dr. Bradway at the lab. The team split up 16 research sources, from laser and camera flood gauges to Arduino tank monitors.</p></div></li>
+        <li><div><h3>Set design criteria <span>Memo, Sept 19</span></h3>
+          <p>5 constraints (fully water resistant, audible alarm, under 10 cm in the tank, detect a 5 cm level change, under $75) and 9 objectives ranked with a pairwise comparison chart, including Slack or email alerts and catching a 1 cm/s rate of change.</p></div></li>
+        <li><div><h3>Decompose and brainstorm</h3>
+          <p>Split the monitor into sensor, processor, enclosure, power, and notification blocks, then filled about 60 index cards. Some ideas were jokes (train a fish to press a button), which we kept on purpose to loosen up the room.</p></div></li>
+      </ol>
+
+      <div class="duo">
+        <figure>
+          <div class="shot" style="aspect-ratio: 4 / 3"><img src="../assets/img/water-tank/whiteboard-decomposition.jpg" width="1200" height="900" loading="lazy" alt="Whiteboard decomposition chart breaking the water level monitor into notification, sensor, and durability branches"></div>
+          <figcaption><b>Decompose</b>Breaking the monitor into what it has to sense, survive, and say.</figcaption>
+        </figure>
+        <figure>
+          <div class="shot" style="aspect-ratio: 3 / 4"><img src="../assets/img/water-tank/brainstorm-index-cards.jpg" width="1050" height="1400" loading="lazy" alt="Index cards with sketched ideas: ultrasound sensor, Arduino Nano, valve system, waterproof enclosure"></div>
+          <figcaption><b>Brainstorm</b>A few of the roughly 60 cards.</figcaption>
+        </figure>
+      </div>
+
+      <ol class="steps" start="4" style="counter-reset: step 3">
+        <li><div><h3>Screen</h3>
+          <p>Pugh screening matrices cut each block to its strongest options. For sensing, ultrasonic, laser, and camera moved on; a contact bar, a floating ball, and a scale were dropped.</p></div></li>
+        <li><div><h3>Combine and score</h3>
+          <p>A morph chart gave about 10 combinations, so we switched to shuffling the cards and reached 29. A weighted scoring matrix (accuracy 35%, ease of use 20%, cost 15%, durability 15%, buildability 10%, size 5%) picked a <strong>submersible pressure sensor with a Seeed XIAO in a waterproof enclosure</strong>.</p></div></li>
+        <li class="pivot"><div><h3>Pivot <span>Design review, Oct 3</span></h3>
+          <p>A review with Dr. Delagrammatikas pushed us to generate five new combinations and score again. An <strong>ultrasonic sensor with an Arduino Nano ESP32 in an acrylic box</strong> scored 3.5 out of 5, against 2.7 for the pressure design. It was cheaper, easier to build, sat outside the water, and the ESP32's built-in Wi-Fi made online alerts simple.</p></div></li>
+      </ol>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Final scoring round</th><th>Sensor</th><th>Processor</th><th>Enclosure</th><th>Score / 5</th></tr></thead>
+          <tbody>
+            <tr class="win"><td><strong>Solution 26 (built)</strong></td><td>Ultrasonic</td><td>Arduino Nano ESP32</td><td>Acrylic box</td><td class="num"><strong>3.50</strong></td></tr>
+            <tr><td>Solution 29</td><td>Ultrasonic</td><td>Arduino Nano ESP32</td><td>Waterproof enclosure</td><td class="num">3.40</td></tr>
+            <tr><td>Solution 28</td><td>Ultrasonic</td><td>Seeed XIAO</td><td>Acrylic box</td><td class="num">3.25</td></tr>
+            <tr><td>Solution 25 (first winner)</td><td>Pressure</td><td>Seeed XIAO</td><td>Waterproof enclosure</td><td class="num">2.70</td></tr>
+            <tr><td>Solution 27</td><td>Pressure</td><td>Arduino Nano ESP32</td><td>Acrylic box</td><td class="num">2.55</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="duo">
+        <figure>
+          <div class="shot" style="aspect-ratio: 4 / 3"><img src="../assets/img/water-tank/whiteboard-pugh-sensor.jpg" width="1600" height="1200" loading="lazy" alt="Whiteboard Pugh screening matrix comparing sensor options"></div>
+          <figcaption><b>Screen</b>The sensor Pugh matrix that sent ultrasonic, laser, and camera forward.</figcaption>
+        </figure>
+        <figure>
+          <div class="shot" style="aspect-ratio: 3 / 4"><img src="../assets/img/water-tank/morphed-solution-cards.jpg" width="1050" height="1400" loading="lazy" alt="Index cards for solutions 25 through 29, marked with green dots"></div>
+          <figcaption><b>Pivot</b>Solutions 25 to 29 after the design review. Number 26 won.</figcaption>
+        </figure>
+      </div>
+
+      <ol class="steps" start="7" style="counter-reset: step 6">
+        <li><div><h3>Prototype and refine <span>Oct to Dec</span></h3>
+          <p>The design kept changing as we built. The epoxy-sealed box became a two-part acrylic drawer, outlet power became USB-C, Teams became Slack, the sensor changed from a JSN-SR04T to an AO2YYUW, and an LCD was added late as a stretch goal. Our accuracy target tightened from 5 cm to under 1 cm once we saw what the sensor could do.</p></div></li>
+        <li><div><h3>Test <span>Plan Nov 2, poster Dec 7</span></h3>
+          <p>Wrote a test plan for each criterion, then ran the tests on a 12 × 20 × 10 in tank.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="design-h">
+    <header><span class="label">03</span><h2 id="design-h">Final design</h2></header>
+    <div class="cs-body">
+      <p>The device hangs on the tank wall from an acrylic hinge, looks down at the water with an ultrasonic sensor, and alerts three ways: buzzer, LCD, and Slack.</p>
+      <div class="trio">
+        <figure>
+          <div class="shot"><img src="../assets/img/water-tank/prototype-enclosure.jpg" width="433" height="577" loading="lazy" alt="Clear acrylic enclosure with two round piezo buzzers, a wooden drawer knob, and the sensor mount on top"></div>
+          <figcaption><b>Enclosure</b>Acrylic drawer, wooden knob, sensor mount.</figcaption>
+        </figure>
+        <figure>
+          <div class="shot"><img src="../assets/img/water-tank/electronics-layout.jpg" width="433" height="500" loading="lazy" alt="Electronics laid out: Arduino Nano ESP32 on a soldered board, LCD screen, ultrasonic sensor, and two buzzers on connectors"></div>
+          <figcaption><b>Electronics</b>Every part on a connector so it can be swapped.</figcaption>
+        </figure>
+        <figure>
+          <div class="shot"><img src="../assets/img/water-tank/slack-alert-phone.jpg" width="645" height="1400" loading="lazy" alt="Phone lock screen showing a Slack alert from Water Level Monitor bot: Water Level Change, Type: Leakage, Indicated by -5 cm/s velocity change"></div>
+          <figcaption><b>Alert</b>A leakage alert arriving on a phone.</figcaption>
+        </figure>
+      </div>
+      <ul>
+        <li><strong>Enclosure.</strong> A 6 × 6 × 2.5 in laser-cut acrylic box joined with acrylic cement. A two-part drawer holds the electronics, keeps water out, and slides open for maintenance. A bent acrylic hinge clamps to the tank wall without modifying it, and a separate mount holds the sensor over the water.</li>
+        <li><strong>Electronics.</strong> An Arduino Nano ESP32 reads an AO2YYUW waterproof ultrasonic distance sensor and drives two SFM-27 piezo buzzers and an LCD1602 display. The LCD runs over I2C to cut down on wiring. Every part plugs in through connectors, and the whole unit runs on USB-C.</li>
+        <li><strong>Software.</strong> The board checks distance about every 500 ms and flags readings outside the allowed range. It computes velocity from the change in distance over 2 seconds and checks that too. On a fault it sounds the buzzers and posts the alert type (overflow, leakage, or out of range) to a lab Slack channel.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="role-h">
+    <header><span class="label">04</span><h2 id="role-h">My role</h2></header>
+    <div class="cs-body">
+      <p>I worked mainly on the hardware, and on the design process as part of the full team.</p>
+      <div class="role-split">
+        <div class="role-card">
+          <h3>What I did</h3>
+          <ul>
+            <li>Helped design the circuit connecting the sensor, buzzers, and LCD to the Arduino.</li>
+            <li>Soldered all of the components onto the board.</li>
+            <li>Helped design and assemble the acrylic box, drawer, and mounts.</li>
+            <li>Joined every client meeting and interview, and worked on criteria, brainstorming, Pugh matrices, and testing.</li>
+            <li>Presented the electronics in our final video.</li>
+          </ul>
+        </div>
+        <div class="role-card team">
+          <h3>What teammates led</h3>
+          <ul>
+            <li>A teammate led the Arduino code and the Slack integration. Parts were written by the whole team together, and my share of the code was small.</li>
+          </ul>
+        </div>
+      </div>
+      <figure>
+        <div class="shot cover" style="aspect-ratio: 16 / 9"><img src="../assets/img/water-tank/video-electronics-segment.jpg" width="1600" height="900" loading="lazy" alt="Fernando holding the acrylic monitor and explaining the electronics in the team's final video"></div>
+        <figcaption><b>Final video</b>Walking through the electronics.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="results-h">
+    <header><span class="label">05</span><h2 id="results-h">Results</h2></header>
+    <div class="cs-body wide">
+      <p style="max-width:68ch">The prototype met all 6 criteria we could test in class. The 2 user-survey criteria were still pending at the poster session.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Criterion</th><th>Target</th><th>How we tested</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Level accuracy</td><td>Error under 1 cm</td><td>Filled the tank to normal and abnormal levels and checked the sensor output</td><td>Within 1 cm <span class="chip pass">Pass</span></td></tr>
+            <tr><td>Velocity detection</td><td>Flag changes over 1 cm/s</td><td>Poured water to push the rate inside and outside the bounds</td><td>Flagged abnormal velocity, including changes above 0.5 cm/s <span class="chip pass">Pass</span></td></tr>
+            <tr><td>Durability</td><td>Survive overflow and repeated use</td><td>Worked the box features 50 times and ran it under water for 2.5 min</td><td>Sturdy and dry <span class="chip pass">Pass</span></td></tr>
+            <tr><td>Cost</td><td>Under $75</td><td>Summed material costs</td><td class="num">$55.80 <span class="chip pass">Pass</span></td></tr>
+            <tr><td>Audibility</td><td>Heard outside the lab</td><td>Sounded the alarm at random and asked bystanders outside the room</td><td>10 of 10 heard it <span class="chip pass">Pass</span></td></tr>
+            <tr><td>Mobile alert</td><td>Notify by phone</td><td>Simulated overflow and leaks and watched Slack</td><td>Alert arrived every time <span class="chip pass">Pass</span></td></tr>
+            <tr><td>Ease of use</td><td>3.5 or higher on a 1 to 5 scale</td><td>Lab staff survey after 3 weeks of use</td><td><span class="chip pending">Pending</span></td></tr>
+            <tr><td>Compactness</td><td>3.5 or higher on a 1 to 5 scale</td><td>Lab staff survey after 3 weeks of use</td><td><span class="chip pending">Pending</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="lessons-h">
+    <header><span class="label">06</span><h2 id="lessons-h">Lessons learned</h2></header>
+    <div class="cs-body wide">
+      <p class="callout" style="max-width:52ch">A scoring matrix only ranks the options you put in it, so keep generating options after a winner appears.</p>
+      <div class="lessons">
+        <div class="lesson"><h3>Reopen the decision when new options appear</h3>
+          <p>Our first winner was a submersible pressure sensor. One design review surfaced combinations we hadn't scored, and the ultrasonic design beat it 3.5 to 2.7. Moving the sensor out of the water also removed most of the waterproofing risk.</p></div>
+        <div class="lesson"><h3>Specs should move with evidence</h3>
+          <p>We set a 5 cm accuracy target before we had touched a sensor. Testing showed under 1 cm was possible, so we raised the bar instead of passing an easy test.</p></div>
+        <div class="lesson"><h3>Fabrication takes longer than wiring</h3>
+          <p>We underestimated the acrylic drawer and the buzzer mounting, and overestimated soldering. Planning several classes ahead kept failing because each task depended on the last, so we switched to weekly quotas. Next time I'd hold one feasibility session up front to size the hands-on work.</p></div>
+        <div class="lesson"><h3>Design for the person who maintains it</h3>
+          <p>Connectors on every part, a drawer instead of a sealed box, and a hinge that clamps on without touching the glued tank all came from the client's constraints, not from the sensing problem.</p></div>
+      </div>
+      <p style="max-width:68ch"><strong>What I'd do next:</strong> let the lab change thresholds with a knob or a phone command instead of reprogramming the Arduino, add a device-failure alert (the client asked for one), and tie the alarm to a valve that shuts off the water.</p>
+    </div>
+  </section>
+
+  <div class="next-up">
+    <a class="back" href="../index.html#projects">← Back to your cortado</a>
+    <a class="back" href="../index.html#menu">Change order</a>
+  </div>
+</main>
+
+<div class="sip">
+  <div class="sip-meta" aria-hidden="true">
+    <span class="label" data-cup-pct>100% left</span>
+    <span class="status" data-cup-status>Scroll to sip</span>
+  </div>
+  <button class="cup-btn" type="button" data-cup aria-label="Your cortado. Tap for a coffee fact or a fact about Fernando."></button>
+</div>
+
+<dialog class="lb" aria-label="Enlarged image">
+  <button type="button">Close</button>
+  <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
+  <p></p>
+</dialog>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

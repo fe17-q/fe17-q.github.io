@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fernando Quijada</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Fernando Quijada, biomedical engineering student at Duke. Medical device design, prototyping, and client-driven projects.">
+<meta property="og:title" content="Fernando Quijada · Biomedical Engineering Portfolio">
+<meta property="og:description" content="Medical device design, prototyping, and client-driven projects from a Duke BME student and barista.">
+<meta property="og:image" content="assets/img/water-tank/sketch-solution-proposed.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5 9h22l-2 17q-.3 2-2.3 2H9.3Q7.3 28 7 26Z' fill='%233b2416'/%3E%3Cpath d='M5.6 14h20.8l-.4 4H6Z' fill='%23c9a07a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- ================= The menu (home) ================= -->
+<div class="view menu-view" id="view-menu">
+  <div class="menu-wrap">
+    <header class="menu-head">
+      <div class="menu-topline">
+        <p class="label">Biomedical engineering · Duke '27</p>
+        <div class="theme-switch" role="group" aria-label="Color theme">
+          <button type="button" data-set-theme="light" aria-pressed="false">Latte</button>
+          <button type="button" data-set-theme="dark" aria-pressed="false">Espresso</button>
+        </div>
+      </div>
+      <h1 class="menu-name">Fernando <span>Quijada</span></h1>
+      <p class="role">Medical device design, from client interview to working prototype.</p>
+      <div class="menu-quick">
+        <a class="btn" href="resume/Fernando_Quijada_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+        <a class="btn ghost" href="#all">Just browsing? See everything</a>
+      </div>
+    </header>
+
+    <section class="board-card" aria-labelledby="order-h">
+      <div class="board-card-head">
+        <h2 id="order-h">What can I get started for you?</h2>
+        <p class="label">Pick a drink to open a section</p>
+      </div>
+      <ul class="drinks">
+        <li><a class="drink" href="#about" data-order="about">
+          <span class="drink-icon" data-icon="about"></span>
+          <span class="drink-text"><span class="drink-name">Latte</span><span class="drink-desc">Espresso, lots of steamed milk, heart on top</span></span>
+          <span class="drink-dots" aria-hidden="true"></span>
+          <span class="drink-section">About me</span>
+        </a></li>
+        <li><a class="drink" href="#projects" data-order="projects">
+          <span class="drink-icon" data-icon="projects"></span>
+          <span class="drink-text"><span class="drink-name">Cortado</span><span class="drink-desc">Equal parts espresso and steamed milk</span></span>
+          <span class="drink-dots" aria-hidden="true"></span>
+          <span class="drink-section">Projects</span>
+        </a></li>
+        <li><a class="drink" href="#experience" data-order="experience">
+          <span class="drink-icon" data-icon="experience"></span>
+          <span class="drink-text"><span class="drink-name">Cappuccino</span><span class="drink-desc">Espresso, milk, and a thick cap of foam</span></span>
+          <span class="drink-dots" aria-hidden="true"></span>
+          <span class="drink-section">Experience</span>
+        </a></li>
+        <li><a class="drink" href="#interests" data-order="interests">
+          <span class="drink-icon" data-icon="interests"></span>
+          <span class="drink-text"><span class="drink-name">Macchiato</span><span class="drink-desc">A shot of espresso marked with foam</span></span>
+          <span class="drink-dots" aria-hidden="true"></span>
+          <span class="drink-section">Interests</span>
+        </a></li>
+        <li><a class="drink" href="#connect" data-order="connect">
+          <span class="drink-icon" data-icon="connect"></span>
+          <span class="drink-text"><span class="drink-name">Americano</span><span class="drink-desc">Espresso and hot water, nothing to hide</span></span>
+          <span class="drink-dots" aria-hidden="true"></span>
+          <span class="drink-section">Let's connect</span>
+        </a></li>
+      </ul>
+    </section>
+
+    <p class="menu-foot">Barista at BSEISU Coffee by day, engineer the rest of the time. Every drink takes about 3 seconds to make.</p>
+  </div>
+</div>
+
+<!-- ================= The order (sections) ================= -->
+<div class="view order-view" id="view-order" hidden>
+  <header class="order-bar">
+    <a class="change-order" href="#menu">← Change order</a>
+    <div class="theme-switch" role="group" aria-label="Color theme">
+      <button type="button" data-set-theme="light" aria-pressed="false">Latte</button>
+      <button type="button" data-set-theme="dark" aria-pressed="false">Espresso</button>
+    </div>
+  </header>
+
+  <main class="order-main" id="order-main" tabindex="-1">
+    <div class="ready">
+      <p class="label" data-ready-label>Order up</p>
+      <h1 data-ready-title>Your latte is ready!</h1>
+      <p class="ready-sub" data-ready-sub>About me</p>
+    </div>
+
+    <section id="about" class="pane" data-pane="about" aria-labelledby="about-h">
+      <div class="sec-head"><h2 id="about-h">About me</h2><span class="label">Latte</span></div>
+      <div class="about-grid">
+        <figure class="portrait">
+          <img src="assets/img/fernando.jpg" width="720" height="862" alt="Fernando Quijada in a dark suit under the stone arches of Duke's West Campus">
+        </figure>
+        <div class="prose">
+          <p>I'm a biomedical engineering senior at Duke, Class of 2027, earning a Certificate in Innovation &amp; Entrepreneurship. I'm an A. James Clark Scholar and a Duke BME Design Fellow.</p>
+          <p>My favorite part of a project is the client check-in that turns up a requirement nobody wrote down, and then the prototype that shows whether we listened. I'm most interested in <strong>medical device design and R&amp;D</strong>, and I'm exploring <strong>product management</strong>.</p>
+          <p>When I'm not in the lab, I'm usually behind the bar at BSEISU Coffee. Dialing in espresso is a small design loop: change one variable, taste, adjust. I work on hardware the same way.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="pane" data-pane="projects" aria-labelledby="projects-h">
+      <div class="sec-head"><h2 id="projects-h">Projects</h2><span class="label">Cortado</span></div>
+
+      <a class="feature" href="projects/ultrasound-water-tank.html">
+        <div class="ph"><img src="assets/img/water-tank/sketch-solution-proposed.jpg" width="1600" height="1200" alt="Hand-drawn sketch titled Solution Proposed: an ultrasonic sensor clamped to a water tank, wired to an acrylic box with an Arduino Nano, power supply, and buzzer"></div>
+        <div class="body">
+          <p class="label">EGR 101 · Fall 2023 · Client project, team of 4</p>
+          <h3>Water level alarm for ultrasound test tanks</h3>
+          <p>A Duke lab was worried about tanks flooding. We built a $56 clamp-on sensor that buzzes and pings Slack when a tank overflows or leaks.</p>
+          <p class="notes-label">Tasting notes</p>
+          <ul class="notes">
+            <li>Client interviews</li><li>Pugh matrices</li><li>Circuit build &amp; soldering</li><li>Laser-cut acrylic</li><li>Arduino Nano ESP32</li>
+          </ul>
+          <span class="cta">Read the case study →</span>
+        </div>
+      </a>
+
+      <ul class="menu-list" aria-label="More projects">
+        <li>
+          <div class="mi-top"><h3>LED microscope stage</h3><span class="label brewing">Case study brewing</span></div>
+          <p class="mi-meta">Duke BME Design Fellows · Summer 2026 · Designed and built solo, for a cancer research lab</p>
+          <p>A purely mechanical unlock, translate, and lock mechanism that switches a mouse-imaging setup between two microscope configurations in under 5 seconds.</p>
+          <ul class="notes"><li>Onshape</li><li>3D printing</li><li>Client check-ins</li><li>Specs &amp; testing</li></ul>
+        </li>
+        <li>
+          <div class="mi-top"><h3>Lightbox: an LED control system</h3><span class="label brewing">Case study brewing</span></div>
+          <p class="mi-meta">BME 254 · Spring 2025 · Solo project</p>
+          <p>A Wall-E-themed 3D-printed enclosure with a custom KiCad PCB and Arduino firmware, validated with linear fits above R² = 0.998.</p>
+          <ul class="notes"><li>Onshape</li><li>KiCad PCB</li><li>Arduino C/C++</li><li>Python data analysis</li></ul>
+        </li>
+        <li>
+          <div class="mi-top"><h3>Pacemaker prototype</h3><span class="label brewing">Case study brewing</span></div>
+          <p class="mi-meta">BME 354 · Spring 2026 · Team of 2, I led the analog circuitry</p>
+          <p>Signal acquisition, R-wave detection, and a MOSFET stimulation circuit, tested on a frog heart with heart-rate error under 1%.</p>
+          <ul class="notes"><li>Circuit design</li><li>Instrumentation amps</li><li>Oscilloscope</li><li>Verification</li></ul>
+        </li>
+      </ul>
+    </section>
+
+    <section id="experience" class="pane" data-pane="experience" aria-labelledby="exp-h">
+      <div class="sec-head"><h2 id="exp-h">Experience</h2><span class="label">Cappuccino</span></div>
+      <ol class="timeline">
+        <li>
+          <span class="when">Fall 2026</span>
+          <div><h3>BME Senior Design <span>· Team of 5, in progress</span></h3>
+          <p>Clinical needs-finding with a general surgeon and a neuro ICU nurse. Our concept automates crushing, mixing, and flushing medications to keep feeding tubes from clogging.</p></div>
+        </li>
+        <li>
+          <span class="when">May – Jul 2026</span>
+          <div><h3>Design Fellow <span>· Duke BME Design Fellows</span></h3>
+          <p>Scoped two device projects with two clinical clients, then designed and built a microscope stage mechanism for a cancer research lab.</p></div>
+        </li>
+        <li>
+          <span class="when">Jun – Jul 2026</span>
+          <div><h3>Teaching Assistant <span>· ODE Summer Design Camp</span></h3>
+          <p>Coached 28 students from sketch to 3D-printed prototype, taught 2D drawing and extrusion in Onshape, and kept 14 Ultimaker S3 printers running.</p></div>
+        </li>
+        <li>
+          <span class="when">Sep 2025 – now</span>
+          <div><h3>Barista <span>· BSEISU Coffee</span></h3>
+          <p>Espresso, milk, and a steady line of customers.</p></div>
+        </li>
+        <li>
+          <span class="when">May 2024 – now</span>
+          <div><h3>Vice President <span>· SHPE at Duke</span></h3>
+          <p>Built the chapter's sponsorship package (events with Lenovo, Deloitte, and Google) and founded mentorSHPE, which grew from 4 to 17 mentor pairs.</p></div>
+        </li>
+        <li>
+          <span class="when">May – Jul 2024</span>
+          <div><h3>Data+ Intern <span>· Duke Data+, with Oak Ridge National Laboratory</span></h3>
+          <p>Co-built a synthetic training-data pipeline and trained 8 PyTorch DeepLabv3 models to remove background artifacts from neutron scattering images.</p></div>
+        </li>
+      </ol>
+
+      <div class="toolkit">
+        <div><h3>CAD &amp; fabrication</h3><p>Onshape, Fusion 360, 3D printing, laser cutting, printer troubleshooting</p></div>
+        <div><h3>Electronics</h3><p>Circuit design, KiCad PCB design, soldering, oscilloscope, Arduino</p></div>
+        <div><h3>Code &amp; data</h3><p>Python (NumPy, Pandas, SciPy, PyTorch), C/C++, Zephyr, Git</p></div>
+        <div><h3>Design &amp; product</h3><p>Client and user interviews, user needs and specs, Figma, customer discovery, Jira</p></div>
+      </div>
+
+      <div class="resume-row">
+        <a class="btn" href="resume/Fernando_Quijada_Resume.pdf" target="_blank" rel="noopener">Open my resume (PDF)</a>
+        <a class="btn ghost" href="https://www.linkedin.com/in/fq19" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </section>
+
+    <section id="interests" class="pane" data-pane="interests" aria-labelledby="int-h">
+      <div class="sec-head"><h2 id="int-h">Interests</h2><span class="label">Macchiato</span></div>
+      <ul class="interests">
+        <li>
+          <h3>Devices built around one user</h3>
+          <p>I like engineering that starts with a specific clinician, researcher, or patient. This year that means feeding tubes: my senior design team is working with a general surgeon and a neuro ICU nurse to stop medication clogs.</p>
+        </li>
+        <li>
+          <h3>Product management</h3>
+          <p>In class I proposed an AI chatbot onboarding feature for Pendo after interviewing Pendo employees, and mocked it up in Figma. This fall my team is building "grain," a tool that adds missing context to social media claims, starting from 10 customer interviews and journey maps.</p>
+        </li>
+        <li>
+          <h3>Mentoring</h3>
+          <p>I founded mentorSHPE, which pairs underclassmen with upperclassmen in Duke's SHPE chapter and grew from 4 pairs to 17. I've also mentored 8 high school juniors through Durham AIM and led professional development for the Clark Scholars.</p>
+        </li>
+        <li>
+          <h3>Teaching people to make things</h3>
+          <p>As a camp TA I helped 28 students turn sketches into 3D-printed prototypes, and taught them to slice their own prints once they were ready.</p>
+        </li>
+        <li>
+          <h3>Coffee, obviously</h3>
+          <p>I've been a barista at BSEISU Coffee since September 2025. It's where this whole menu came from.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section id="connect" class="pane contact" data-pane="connect" aria-labelledby="contact-h">
+      <h2 id="contact-h">Let's grab <em>a coffee.</em></h2>
+      <div class="prose">
+        <p>I'm looking for roles and co-ops in medical device design, R&amp;D, and product. If you're working on something for patients or clinicians, I'd love to hear about it.</p>
+      </div>
+      <div class="email-row">
+        <span class="email" id="email">fernando.quijada@duke.edu</span>
+        <button class="btn ghost" type="button" data-copy="fernando.quijada@duke.edu" data-copy-msg="#copy-msg">Copy email</button>
+        <a class="btn" href="mailto:fernando.quijada@duke.edu">Write to me</a>
+      </div>
+      <p class="copy-msg" id="copy-msg" aria-live="polite"></p>
+      <ul class="connect-links">
+        <li><span class="label">LinkedIn</span><a href="https://www.linkedin.com/in/fq19" target="_blank" rel="noopener">linkedin.com/in/fq19</a></li>
+        <li><span class="label">Resume</span><a href="resume/Fernando_Quijada_Resume.pdf" target="_blank" rel="noopener">Fernando_Quijada_Resume.pdf</a></li>
+        <li><span class="label">Based in</span><span>Durham, NC</span></li>
+      </ul>
+    </section>
+
+    <nav class="another" aria-labelledby="another-h">
+      <h2 id="another-h" data-another-title>Finished your latte?</h2>
+      <p class="label">Order another</p>
+      <ul class="another-list" data-another></ul>
+    </nav>
+
+    <footer class="foot">
+      <p>© 2026 Fernando Quijada · Durham, NC · Plain HTML, CSS, and JavaScript, hosted on GitHub Pages.</p>
+    </footer>
+  </main>
+
+  <div class="sip">
+    <div class="sip-meta" aria-hidden="true">
+      <span class="label" data-cup-pct>100% left</span>
+      <span class="status" data-cup-status>Scroll to sip</span>
+    </div>
+    <button class="cup-btn" type="button" data-cup aria-label="Tap for a coffee fact or a fact about Fernando"></button>
+  </div>
+</div>
+
+<!-- ================= The bar (brewing overlay) ================= -->
+<div class="brew" id="brew" hidden aria-live="polite">
+  <p class="brew-toast" id="brew-toast">One latte, coming right up!</p>
+  <div class="brew-stage" id="brew-stage"></div>
+  <button class="brew-skip" type="button" id="brew-skip">Skip</button>
+</div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
