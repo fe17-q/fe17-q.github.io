@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lightbox · Fernando Quijada</title>
+<meta name="description" content="Case study: Lightbox, a Wall-E themed LED control system with a custom KiCad PCB and Arduino firmware.">
+<meta property="og:title" content="Lightbox: an LED control system · Fernando Quijada">
+<meta property="og:image" content="../assets/img/lightbox/front-led.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5 9h22l-2 17q-.3 2-2.3 2H9.3Q7.3 28 7 26Z' fill='%233b2416'/%3E%3Cpath d='M5.6 14h20.8l-.4 4H6Z' fill='%23c9a07a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-drink="projects">
+
+<div class="cs-top">
+  <a class="back" href="../index.html#projects">← Back to your cortado</a>
+  <div class="theme-switch" role="group" aria-label="Color theme">
+    <button type="button" data-set-theme="light" aria-pressed="false">Latte</button>
+    <button type="button" data-set-theme="dark" aria-pressed="false">Espresso</button>
+  </div>
+</div>
+
+<main class="cs">
+
+  <div class="cs-hero">
+    <div>
+      <p class="label">Case study · BME 254 · Spring 2025</p>
+      <h1>Lightbox: a Wall-E that lights up on command</h1>
+      <p class="lede">An LED control system inside a 3D-printed Wall-E. Press the button and his eyes glow while his battery light blinks. Two knobs set how bright the eyes are and how fast the light blinks.</p>
+    </div>
+
+    <aside class="ticket" aria-label="Project summary">
+      <div class="t-head"><span>Order #254</span><span>Spring 2025</span></div>
+      <dl>
+        <dt>Course</dt><dd>BME 254, Duke</dd>
+        <dt>My role</dt><dd>Designed and built it: enclosure, circuit, PCB, firmware, and testing</dd>
+        <dt>Tools</dt><dd>Onshape, KiCad, PCB milling, soldering, Arduino Nano Every, PlatformIO (C++), Python, oscilloscope</dd>
+        <dt>Timeline</dt><dd>Spring 2025</dd>
+      </dl>
+      <div class="t-total"><span>Linear fit</span><strong>R² ≥ 0.998</strong></div>
+    </aside>
+  </div>
+
+  <figure style="margin-top:40px">
+    <div class="shot cover" style="aspect-ratio: 16 / 9"><img src="../assets/img/lightbox/front-led.jpg" width="1600" height="1200" alt="The finished 3D-printed Wall-E with blue body, orange head and arms, black treads, and a red LED lit on his chest"></div>
+    <figcaption><b>Final build</b>Wall-E with his battery light on.</figcaption>
+  </figure>
+
+  <section class="cs-section" aria-labelledby="problem-h">
+    <header><span class="label">01</span><h2 id="problem-h">The brief</h2></header>
+    <div class="cs-body">
+      <p>Build a "one shot" light controller inside an enclosure shaped like a fun figure, with two LEDs as eyes and a third LED that blinks.</p>
+      <ul>
+        <li>A push button turns the eyes on for 5 seconds and the blinking LED on for 10 seconds.</li>
+        <li>One potentiometer sets eye brightness from 0 to 100% using PWM. A second sets the blink rate from 5 to 10 Hz.</li>
+        <li>Runs on a 9 V battery with a toggle power switch. Every LED is driven through an IRFZ44 MOSFET, on a single-sided PCB with the Arduino in a socket and every panel part on a connector.</li>
+      </ul>
+      <p>I picked Wall-E because it would look great, and because I wanted to see if I could pull off a shape that complex.</p>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="process-h">
+    <header><span class="label">02</span><h2 id="process-h">How I built it</h2></header>
+    <div class="cs-body">
+      <ol class="steps">
+        <li><div><h3>Enclosure in Onshape</h3>
+          <p>Wall-E's eyes became the brightness LEDs, and the light on his chest that shows his battery became the blinking LED. I put the button on his door and the knobs on his back, left room inside for all the electronics, made his neck hollow so wires could reach the eyes, and designed the arms, treads, and door to press-fit into place.</p></div></li>
+        <li><div><h3>Circuit in KiCad</h3>
+          <p>A schematic with the Arduino Nano Every, two potentiometers, the push button, the toggle switch, and a MOSFET for each LED, all powered by the 9 V battery.</p></div></li>
+        <li><div><h3>PCB layout</h3>
+          <p>Sized the board to fit inside the body, and checked that there were no ground islands and that every connection was valid.</p></div></li>
+        <li><div><h3>Mill and solder</h3>
+          <p>Milled the board and soldered every component, watching LED polarity and switch orientation. Some cables came up short, so I spliced in extensions.</p></div></li>
+        <li><div><h3>Firmware</h3>
+          <p>Wrote it in C++ with PlatformIO. A button press starts both timers. The analog readings from the two knobs map to the eyes' PWM duty cycle and the battery light's blink frequency.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="design-h">
+    <header><span class="label">03</span><h2 id="design-h">See it work</h2></header>
+    <div class="cs-body">
+      <div class="evolution">
+        <figure>
+          <div class="shot" style="aspect-ratio: 9 / 16"><video src="../assets/img/lightbox/lightbox-demo.mp4" poster="../assets/img/lightbox/lightbox-demo-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Video of the Wall-E lightbox turning on its LEDs"></video></div>
+          <figcaption><b>Demo</b>Button, eyes, and blinking battery light.</figcaption>
+        </figure>
+        <span class="arrow" aria-hidden="true"></span>
+        <figure>
+          <div class="shot" style="aspect-ratio: 4 / 3;background:#333"><img src="../assets/img/lightbox/cad-assembly.jpg" width="1400" height="1119" loading="lazy" alt="Onshape render of the full Wall-E enclosure assembly"></div>
+          <figcaption><b>CAD</b>The full assembly in Onshape.</figcaption>
+        </figure>
+      </div>
+      <div class="trio">
+        <figure>
+          <div class="shot cover"><img src="../assets/img/lightbox/inside.jpg" width="1600" height="1200" loading="lazy" alt="Wall-E's door open showing the milled PCB, Arduino, and wiring inside the body"></div>
+          <figcaption><b>Inside</b>The milled PCB and wiring.</figcaption>
+        </figure>
+        <figure>
+          <div class="shot cover"><img src="../assets/img/lightbox/side.jpg" width="1600" height="1200" loading="lazy" alt="Side view of Wall-E showing the arm, tread, and neck"></div>
+          <figcaption><b>Side</b>Press-fit arms and treads.</figcaption>
+        </figure>
+        <figure>
+          <div class="shot cover"><img src="../assets/img/lightbox/front.jpg" width="1600" height="1200" loading="lazy" alt="Front view of Wall-E with his binocular eyes"></div>
+          <figcaption><b>Front</b>The eyes hold the brightness LEDs.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="results-h">
+    <header><span class="label">04</span><h2 id="results-h">Testing and results</h2></header>
+    <div class="cs-body wide">
+      <p style="max-width:68ch">I measured the outputs with an oscilloscope, taking 10 readings at each knob setting, and analyzed them in Python with 95% confidence intervals and linear fits.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Output</th><th>Target</th><th>Measured</th><th>Linearity</th></tr></thead>
+          <tbody>
+            <tr><td>Eye brightness (PWM duty cycle)</td><td>0 to 100%, set by knob</td><td>Every setting within about 1.3 points of target on average (for example, 19.9% at 20% and 80.8% at 80%)</td><td class="num">R² = 0.9995 <span class="chip pass">Pass</span></td></tr>
+            <tr><td>Battery light blink rate</td><td>5 to 10 Hz, set by knob</td><td>Means within 0.15 Hz of target (4.93 Hz at 5 Hz, 9.90 Hz at 10 Hz)</td><td class="num">R² = 0.998 <span class="chip pass">Pass</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="max-width:68ch">Both knobs respond in a nearly perfectly straight line, so turning a knob changes the brightness or blink rate evenly across its whole range.</p>
+    </div>
+  </section>
+
+  <div class="next-up">
+    <a class="back" href="../index.html#projects">← Back to your cortado</a>
+    <a class="back" href="../index.html#menu">Change order</a>
+  </div>
+</main>
+
+<div class="sip">
+  <div class="sip-meta" aria-hidden="true">
+    <span class="label" data-cup-pct>100% left</span>
+    <span class="status" data-cup-status>Scroll to sip</span>
+  </div>
+  <button class="cup-btn" type="button" data-cup aria-label="Your cortado. Tap for a coffee fact or a fact about Fernando."></button>
+</div>
+
+<dialog class="lb" aria-label="Enlarged image">
+  <button type="button">Close</button>
+  <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
+  <p></p>
+</dialog>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
