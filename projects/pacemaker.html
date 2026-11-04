@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pacemaker Prototype · Fernando Quijada</title>
+<meta name="description" content="Case study: a rate-responsive pacemaker prototype that senses ECG, detects R-waves, and paces a frog heart.">
+<meta property="og:title" content="Pacemaker prototype · Fernando Quijada">
+<meta property="og:image" content="../assets/img/pacemaker/breadboard.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5 9h22l-2 17q-.3 2-2.3 2H9.3Q7.3 28 7 26Z' fill='%233b2416'/%3E%3Cpath d='M5.6 14h20.8l-.4 4H6Z' fill='%23c9a07a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-drink="projects">
+
+<div class="cs-top">
+  <a class="back" href="../index.html#projects">← Back to your cortado</a>
+  <div class="theme-switch" role="group" aria-label="Color theme">
+    <button type="button" data-set-theme="light" aria-pressed="false">Latte</button>
+    <button type="button" data-set-theme="dark" aria-pressed="false">Espresso</button>
+  </div>
+</div>
+
+<main class="cs">
+
+  <div class="cs-hero">
+    <div>
+      <p class="label">Case study · BME 354 · Spring 2026</p>
+      <h1>A pacemaker that listens before it paces</h1>
+      <p class="lede">A demand pacemaker prototype that reads the heart's ECG, spots each beat, and sends a pulse only when a beat is missing. A temperature sensor raises the pacing rate during activity. We tested it on a frog heart.</p>
+    </div>
+
+    <aside class="ticket" aria-label="Project summary">
+      <div class="t-head"><span>Order #354</span><span>Spring 2026</span></div>
+      <dl>
+        <dt>Course</dt><dd>BME 354, Duke</dd>
+        <dt>Team</dt><dd>Avi Heyman, Fernando Quijada</dd>
+        <dt>My role</dt><dd>Led the analog circuitry; worked on testing and the report with my partner</dd>
+        <dt>Tools</dt><dd>AD623 instrumentation amp, MCP6002 op-amps, TMP36, Arduino Nano, MOSFET pulse circuit, oscilloscope, function generator</dd>
+        <dt>Timeline</dt><dd>Spring 2026</dd>
+      </dl>
+      <div class="t-total"><span>Heart-rate error</span><strong>Under 1%</strong></div>
+    </aside>
+  </div>
+
+  <figure style="margin-top:40px">
+    <div class="shot" style="aspect-ratio: 16 / 9"><img src="../assets/img/pacemaker/block-diagram.jpg" width="1600" height="1109" alt="Block diagram of the pacemaker: signal acquisition (instrumentation amplifier, bandpass filter, non-inverting amplifier), temperature sensor, signal processing and decision making (comparator, Arduino Nano), and a MOSFET pulse generator for stimulation"></div>
+    <figcaption><b>System</b>Four subsystems: sense, filter and amplify, decide, stimulate.</figcaption>
+  </figure>
+
+  <section class="cs-section" aria-labelledby="problem-h">
+    <header><span class="label">01</span><h2 id="problem-h">The problem</h2></header>
+    <div class="cs-body">
+      <p>Sick sinus syndrome, heart block, and bradycardia leave the heart beating too slowly or skipping beats. A demand pacemaker watches for each natural beat and steps in only when one doesn't arrive in time.</p>
+      <p>Most pacemakers hold a fixed minimum rate, so a heart speeding up during exercise can look like something to correct. We added a rate response that uses blood temperature as a sign of activity.</p>
+      <p class="callout">Sense the heart's own rhythm, pace only when a beat is missing, and raise the minimum rate when the body needs more.</p>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="process-h">
+    <header><span class="label">02</span><h2 id="process-h">How it works</h2></header>
+    <div class="cs-body">
+      <ol class="steps">
+        <li><div><h3>Signal acquisition</h3>
+          <p>An AD623 instrumentation amplifier picks up the ECG between two electrodes without loading the high-impedance tissue. A bandpass filter keeps 1.9 to 53 Hz, which removes DC drift and most of the 60 Hz powerline noise. A non-inverting amplifier then adds a gain of 471.</p></div></li>
+        <li><div><h3>Beat detection</h3>
+          <p>A comparator with a 3.5 V reference fires only on the tall R-wave and ignores the P and T waves. The Arduino samples at 200 Hz, times the gap between R-waves, and pauses briefly after each beat so it doesn't count one beat twice.</p></div></li>
+        <li><div><h3>Decide and pace</h3>
+          <p>If no natural beat arrives before the timer runs out, the Arduino triggers a MOSFET that discharges a capacitor into the heart. We sized the pulse from the measured rheobase and chronaxie, with a safety margin.</p></div></li>
+        <li><div><h3>Rate response</h3>
+          <p>A TMP36 sensor records a baseline temperature at startup. If the temperature stays past a threshold, a smoothing function gradually raises the minimum pacing rate instead of jumping it.</p></div></li>
+      </ol>
+      <div class="evolution">
+        <figure>
+          <div class="shot cover" style="aspect-ratio: 3 / 4"><img src="../assets/img/pacemaker/breadboard.jpg" width="1200" height="1600" loading="lazy" alt="The breadboard prototype with an Arduino Nano, op-amps, and wiring"></div>
+          <figcaption><b>Prototype</b>Our breadboard build.</figcaption>
+        </figure>
+        <span class="arrow" aria-hidden="true"></span>
+        <figure>
+          <div class="shot" style="aspect-ratio: 1600 / 980"><img src="../assets/img/pacemaker/scope-comparator.jpg" width="1600" height="980" loading="lazy" alt="Oscilloscope showing a simulated ECG in blue and the comparator's 5 V pulse at every R-wave in yellow"></div>
+          <figcaption><b>Bench test</b>The comparator (yellow) fires on every R-wave of a simulated ECG (blue).</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="role-h">
+    <header><span class="label">03</span><h2 id="role-h">My role</h2></header>
+    <div class="cs-body">
+      <p>I led the analog circuitry. My partner and I tested the full system together on the bench and on the frog heart, and wrote the report together.</p>
+    </div>
+  </section>
+
+  <section class="cs-section" aria-labelledby="results-h">
+    <header><span class="label">04</span><h2 id="results-h">Testing and results</h2></header>
+    <div class="cs-body wide">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Test</th><th>How we tested</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Filter cutoff</td><td>Swept sine waves near the cutoff with a function generator</td><td>Gain of 0.710 at 42 Hz, close to the 0.707 target</td></tr>
+            <tr><td>Overall gain</td><td>3.84 mV sine wave in the passband, about the size of a real ECG</td><td class="num">4.56 V out, a gain of about 1,190</td></tr>
+            <tr><td>R-wave detection</td><td>Simulated ECG, then a live frog ECG</td><td>A 5 V pulse on every QRS, with no false triggers on P or T waves <span class="chip pass">Pass</span></td></tr>
+            <tr><td>Heart-rate accuracy</td><td>Known rates from a heartbeat simulator</td><td>Error under 1% across the full range <span class="chip pass">Pass</span></td></tr>
+            <tr><td>Demand pacing</td><td>Frog heart, live</td><td>Paced when beats were missing and held off when the heart beat on its own <span class="chip pass">Pass</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="evolution">
+        <figure>
+          <div class="shot" style="aspect-ratio: 764 / 622;background:#fff"><img src="../assets/img/pacemaker/frog-ecg-comparator.jpg" width="764" height="622" loading="lazy" alt="Plot of 10 seconds of frog ECG with the comparator output pulsing at each QRS complex"></div>
+          <figcaption><b>Frog ECG</b>Clear P, QRS, and T waves, with the comparator firing only on QRS.</figcaption>
+        </figure>
+        <span class="arrow" aria-hidden="true"></span>
+        <figure>
+          <div class="shot" style="aspect-ratio: 1140 / 686;background:#fff"><img src="../assets/img/pacemaker/frog-ecg-pacing.jpg" width="1140" height="686" loading="lazy" alt="Plot of frog ECG in blue with pacemaker stimulation pulses in green over about 60 seconds"></div>
+          <figcaption><b>Pacing</b>Stimuli (green) stop when the heart beats on its own.</figcaption>
+        </figure>
+      </div>
+      <p style="max-width:68ch"><strong>What we'd do next:</strong> combine temperature with an accelerometer or a respiration sensor for a truer read of the body's demand, and let the rate ease back down once temperature returns to baseline.</p>
+    </div>
+  </section>
+
+  <div class="next-up">
+    <a class="back" href="../index.html#projects">← Back to your cortado</a>
+    <a class="back" href="../index.html#menu">Change order</a>
+  </div>
+</main>
+
+<div class="sip">
+  <div class="sip-meta" aria-hidden="true">
+    <span class="label" data-cup-pct>100% left</span>
+    <span class="status" data-cup-status>Scroll to sip</span>
+  </div>
+  <button class="cup-btn" type="button" data-cup aria-label="Your cortado. Tap for a coffee fact or a fact about Fernando."></button>
+</div>
+
+<dialog class="lb" aria-label="Enlarged image">
+  <button type="button">Close</button>
+  <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
+  <p></p>
+</dialog>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
