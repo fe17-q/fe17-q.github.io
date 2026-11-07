@@ -603,10 +603,15 @@
        side: shot pulls .03-.19, milk pours .19-.54, art settles by ~.58. top: shot 0-.26, milk .23-.6, art done ~.68 */
     var MS = side ? [0, .03, .19, .58] : [0, .02, .23, .68];
     setTrack(0, MS);
+    /* side view: after the pour, the clock speeds up smoothly (1x to 1.8x between T .6 and .72),
+       so the tilt and zoom into the art take less time without a visible change of pace */
+    var T = 0, last = null;
+    function rate(x) { return side ? 1 + .8 * easeInOut(phase(x, .6, .72)) : 1; }
     function frame(now) {
       if (skipped) return;
-      if (t0 === null) t0 = now;
-      var T = clamp01((now - t0) / DUR);
+      if (t0 === null) { t0 = now; last = now; }
+      T = clamp01(T + Math.min(now - last, 100) / DUR * rate(T));
+      last = now;
       var z = easeIn(phase(T, Z0, 1));
       var sc = 1 + z * 15;
       if (side) {
