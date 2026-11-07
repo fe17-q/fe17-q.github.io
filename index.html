@@ -286,6 +286,12 @@
 <!-- ================= The bar (brewing overlay) ================= -->
 <div class="brew" id="brew" hidden aria-live="polite">
   <p class="brew-toast" id="brew-toast">One latte, coming right up!</p>
+  <ol class="brew-track" id="brew-track" aria-label="Order status">
+    <li data-step="0"><span class="dot" aria-hidden="true"></span><span class="lbl">Order received</span></li>
+    <li data-step="1"><span class="dot" aria-hidden="true"></span><span class="lbl">Pulling shot</span></li>
+    <li data-step="2"><span class="dot" aria-hidden="true"></span><span class="lbl" data-milk-step>Steaming milk</span></li>
+    <li data-step="3"><span class="dot" aria-hidden="true"></span><span class="lbl">Ready!</span></li>
+  </ol>
   <div class="brew-stage" id="brew-stage"></div>
   <button class="brew-skip" type="button" id="brew-skip">Skip</button>
 </div>

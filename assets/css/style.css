@@ -489,6 +489,26 @@ html.brewing, html.brewing body { overflow: hidden; }
   animation: pop .45s cubic-bezier(.2, 1.4, .4, 1);
 }
 .brew-toast b { color: var(--crema); font-weight: 600; }
+.brew-track {
+  --fill: 0; list-style: none; margin: -8px 0 0; padding: 0; position: relative;
+  display: grid; grid-template-columns: repeat(4, 1fr); width: min(460px, 100%);
+  font-family: var(--f-mono); font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; text-align: center;
+}
+.brew-track::before, .brew-track::after {
+  content: ""; position: absolute; top: 5px; left: 12.5%; height: 2px; border-radius: 2px;
+}
+.brew-track::before { right: 12.5%; background: var(--line); }
+.brew-track::after { width: calc(75% * var(--fill)); background: var(--crema); }
+.brew-track li { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--muted); transition: color .3s ease; }
+.brew-track .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--paper); border: 2px solid var(--line); transition: background .3s ease, border-color .3s ease, transform .3s ease; }
+.brew-track li.done .dot, .brew-track li.now .dot { border-color: var(--crema); }
+.brew-track li.done .dot { background: var(--crema); }
+.brew-track li.now { color: var(--ink); }
+.brew-track li.now .dot { transform: scale(1.25); }
+.brew-track li.done { color: var(--ink); }
+.brew-track li[data-step="3"].now { color: var(--crema); }
+.brew-track li[data-step="3"].now .dot { background: var(--crema); }
+@media (max-width: 420px) { .brew-track { font-size: .6rem; letter-spacing: .02em; } }
 .brew-stage { width: min(440px, 82vw, 58vh); aspect-ratio: 1; will-change: transform; }
 .brew-stage svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .brew-skip {

@@ -294,7 +294,8 @@
 
     function update(T) {
       /* timeline: pourer comes in (.04-.2), pours (.2-.53), leaves (.53-.64), camera tilts up (.6-.84) */
-      top.update(.34 + .66 * phase(T, .2, .62));
+      /* the shot pulls while the pourer comes in, then the milk (or water) pours */
+      top.update(.34 * phase(T, .03, .19) + .66 * phase(T, .2, .62));
       camera(phase(T, .56, .92));
       var sp = surfacePoint();
       /* T at which brewing progress reaches t: t = .34 + .66 * (T - .2) / .42 */
@@ -555,6 +556,22 @@
     var b = document.createElement("b"); b.textContent = d.drink; toast.appendChild(b);
     toast.appendChild(document.createTextNode(", coming right up!"));
     toast.style.opacity = "";
+    var track = document.getElementById("brew-track");
+    var milkLbl = track && track.querySelector("[data-milk-step]");
+    if (milkLbl) milkLbl.textContent = d.water ? "Pouring hot water" : "Steaming milk";
+    function setTrack(T, MS) {
+      if (!track) return;
+      /* MS = the T at which each step starts; the bar fills evenly from one dot to the next */
+      var i = 0; while (i < 3 && T >= MS[i + 1]) i++;
+      var fill = i >= 3 ? 1 : (i + phase(T, MS[i], MS[i + 1])) / 3;
+      track.style.setProperty("--fill", fill.toFixed(4));
+      track.querySelectorAll("li").forEach(function (li, j) {
+        li.classList.toggle("done", j < i || i === 3);
+        li.classList.toggle("now", j === i);
+        if (j === i) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
+      });
+    }
+    if (track) track.style.opacity = "";
     stage.textContent = "";
     stage.style.transform = "";
     var side = BREW_STYLE === "side";
@@ -572,6 +589,7 @@
 
     if (reduceMotion) {
       drink.update(1);
+      setTrack(1, [0, 0, 0, 0]);
       setTimeout(function () { if (!skipped) finishBrew(key); }, 900);
       return;
     }
@@ -580,7 +598,11 @@
        side view: the zoom starts while the camera is still tilting up (tilt .56-.92, zoom .62-1),
        so the two read as one move. The zoom keeps the coffee's center sliding to the middle of the screen. */
     var DUR = side ? 5400 : 3300, t0 = null;
-    var Z0 = side ? .62 : .8, FADE = side ? [.66, .76] : [.74, .82], SHOW = side ? .9 : .86, OUT = side ? .9 : .88;
+    var Z0 = side ? .62 : .8, FADE = side ? [.68, .78] : [.74, .82], SHOW = side ? .9 : .86, OUT = side ? .9 : .88;
+    /* order tracker: when each step starts, matched to what's on screen.
+       side: shot pulls .03-.19, milk pours .19-.54, art settles by ~.58. top: shot 0-.26, milk .23-.6, art done ~.68 */
+    var MS = side ? [0, .03, .19, .58] : [0, .02, .23, .68];
+    setTrack(0, MS);
     function frame(now) {
       if (skipped) return;
       if (t0 === null) t0 = now;
@@ -598,8 +620,10 @@
         drink.update(clamp01(T / .76));
         stage.style.transform = "scale(" + sc.toFixed(3) + ")";
       }
+      setTrack(T, MS);
       toast.style.opacity = (1 - phase(T, FADE[0], FADE[1])).toFixed(3);
       skip.style.opacity = toast.style.opacity;
+      if (track) track.style.opacity = toast.style.opacity;
       if (T > SHOW && !revealed) {
         revealed = true;
         if (location.hash !== "#" + key) location.hash = key; else route();
