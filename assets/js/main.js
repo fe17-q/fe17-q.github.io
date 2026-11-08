@@ -417,6 +417,7 @@
     ["About Fernando", "Fernando has been a barista at BSEISU Coffee since September 2025."],
     ["About Fernando", "Fernando's favorite way to spend a day off is hopping between coffee shops and comparing their pastries."],
     ["About Fernando", "Fernando ran his first half marathon in July 2026 and is training for his first full marathon."],
+    ["About Fernando", "Fernando loves to bake treats for other people, from chocolate chip cookies to blueberry Basque cheesecake."],
     ["Coffee fact", "A cortado is roughly equal parts espresso and steamed milk. The name comes from the Spanish cortar, to cut."],
     ["About Fernando", "Fernando's first-year water tank alarm was heard outside the room by 10 of 10 bystanders."],
     ["Coffee fact", "Coffee beans are the seeds of a cherry-like fruit."],
