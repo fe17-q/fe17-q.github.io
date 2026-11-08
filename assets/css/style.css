@@ -542,3 +542,8 @@ html.brewing, html.brewing body { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .brew-toast { animation: none; } }
 
 /* small screens: case study page reuses .sip */
+
+/* switching sections from inside one: no brewing, just a quick fade */
+.order-view.swap { animation: swap-in .28s ease-out; }
+@keyframes swap-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .order-view.swap { animation: none; } }

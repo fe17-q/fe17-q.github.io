@@ -649,6 +649,15 @@
       var a = e.target.closest("[data-order]");
       if (!a) return;
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0) return;
+      /* already inside a section ("Order another"): skip the brewing and go straight there, with a quick fade */
+      if (orderView.contains(a)) {
+        e.preventDefault();
+        history.pushState(null, "", "#" + a.getAttribute("data-order"));
+        route();
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        orderView.classList.remove("swap"); void orderView.offsetWidth; orderView.classList.add("swap");
+        return;
+      }
       e.preventDefault();
       order(a.getAttribute("data-order"));
     });
