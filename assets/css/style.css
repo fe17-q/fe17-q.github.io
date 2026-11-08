@@ -433,6 +433,16 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .order-view.single .pane.contact > h2 { font-size: var(--step-3); }
 .pane { scroll-margin-top: 80px; }
 
+.picks-intro { color: var(--muted); max-width: 64ch; margin: 0 0 22px; }
+.picks { display: grid; gap: 18px; }
+.pick { border: 1.5px solid var(--line); background: var(--card); padding: 22px 22px 24px; display: grid; gap: 10px; }
+.pick h3 { font-size: var(--step-1); }
+.pick > p:not(.label) { color: var(--muted); max-width: 64ch; }
+.art-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 6px; }
+.art-row figure { margin: 0; }
+.art-row .shot { aspect-ratio: 1; border-radius: 50%; }
+.art-row .shot img { object-fit: cover; }
+.art-row figcaption { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); text-align: center; margin-top: 8px; }
 .interests { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 .interests li { padding: 22px 0; border-top: 1.5px dotted var(--line); display: grid; gap: 8px; }
 .interests li:last-child { border-bottom: 1.5px dotted var(--line); }
