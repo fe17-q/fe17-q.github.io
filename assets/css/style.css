@@ -443,6 +443,14 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .art-row .shot { aspect-ratio: 1; border-radius: 50%; }
 .art-row .shot img { object-fit: cover; }
 .art-row figcaption { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); text-align: center; margin-top: 8px; }
+.usual { margin: 4px 0 2px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1.5px dashed var(--line); border-radius: 3px; }
+.usual > div { padding: 10px 14px 12px; display: grid; gap: 3px; }
+.usual > div + div { border-left: 1.5px dashed var(--line); }
+.usual dt { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--crema); }
+.usual dd { margin: 0; font-weight: 600; font-size: .95rem; }
+@media (max-width: 560px) { .usual { grid-template-columns: 1fr; } .usual > div + div { border-left: 0; border-top: 1.5px dashed var(--line); } }
+.miles .mi-pace { font-size: .95rem; }
+.art-row .twist { display: block; margin-top: 4px; color: var(--crema); text-transform: none; letter-spacing: 0; font-size: .72rem; }
 .miles { list-style: none; margin: 6px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; position: relative; }
 .miles li { border: 1.5px solid var(--line); border-radius: 3px; padding: 14px 14px 16px; display: grid; gap: 4px; position: relative; }
 .miles li.done { border-color: var(--crema); }
